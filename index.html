@@ -19,9 +19,9 @@
             </div>
             <div class="footer">
                 <div class="add-text">
-                    <p onclick="showInput('todo')"><span>+</span>Add List</p>
+                    <p onclick="showInput('todo', event)"><span>+</span>Add List</p>
                 </div>                
-                <div class="inputContainer" id="todoInputContainer" style="display: none">
+                <div class="inputContainer" id="todoInputContainer" >
                     <textarea name="input" dir="auto" placeholder="Enter a title" id="todoInput"></textarea>
                      <button onclick="addList('todo')">Add card</button>
                 </div>
@@ -37,8 +37,10 @@
                 </ul>
             </div>
             <div class="footer">
-                <p class="add-text" onclick="showInput('doing')"><span>+</span> Add List</p>
-                <div class="inputContainer" id="doingInputContainer" style="display: none;" >
+                <div class="add-text">
+                    <p onclick="showInput('doing', event)"><span>+</span>Add List</p>
+                </div> 
+                <div class="inputContainer" id="doingInputContainer"  >
                     <textarea name="input" dir="auto" placeholder="Enter a title" id="doingInput"></textarea>
                      <button onclick="addList('doing')">Add card</button>
                 </div>
@@ -54,8 +56,10 @@
                 </ul>
             </div>
             <div class="footer">
-                <p class="add-text"  onclick="showInput('done')"><span>+</span> Add List</p>
-                <div class="inputContainer" id="doneInputContainer" style="display: none;">
+                <div class="add-text">
+                    <p onclick="showInput('done', event)"><span>+</span>Add List</p>
+                </div> 
+                <div class="inputContainer" id="doneInputContainer">
                     <textarea name="input" dir="auto" placeholder="Enter a title" id="doneInput"></textarea>
                      <button onclick="addList('done')">Add card</button>
                 </div>

@@ -1,5 +1,6 @@
 
-let listid ="";
+let globalid =null;
+
 function addList(listId){
     const taskBox = document.getElementById(listId)  //todo, doing or done
     const cards = document.getElementById(listId+"Cards") // div in which list are placed
@@ -19,6 +20,13 @@ function addList(listId){
     list.appendChild(cardElement)
     cardElement.addEventListener('dragstart', dragStart);
     cardElement.addEventListener('dragend',dragEnd);
+
+    // store to localstorage
+    const listData = JSON.parse(localStorage.getItem(listId)) || [];
+    listData.push(text);
+    localStorage.setItem(listId, JSON.stringify(listData));
+
+
     hideInput(listId)
 }
 
@@ -43,13 +51,18 @@ columns.forEach((col)=>{
     col.addEventListener("dragover", dragover);
 })
 
-function showInput(listId){
+function showInput(listId, event){
+    event.stopPropagation();
+    if(globalid && globalid!==listId){
+        hideInput(globalid)
+    }
     const textinput = document.getElementById(listId+"InputContainer");
     const addText = document.querySelector(`#${listId} .add-text`);
 
     textinput.style.display="flex";
     addText.style.display="none";
-
+    globalid = listId;
+    
     
 }
 
@@ -59,13 +72,30 @@ function hideInput(listId) {
     const textarea = document.getElementById(listId + "Input");
     if (!textarea.value.trim()) { // If empty, hide input and show "Add List"
         inputContainer.style.display = "none";
-        addText.style.display = "block";
+        addText.style.display = "flex";
     }
 }
 
 document.body.addEventListener("click",(event)=>{
-    if(!event.target.closest(`#${listid}InputContainer`)){
-        hideInput(listid)
-    }
-
+    if (globalid && !event.target.closest("#container") && !event.target.closest(`#${globalid}InputContainer`)){
+        hideInput(globalid);
+        globalid = null; // Reset after hiding
+}
 });
+
+window.onload = function() {
+    const lists = ["todo", "doing", "done"]; // your list IDs
+
+    lists.forEach(listId => {
+        const listData = JSON.parse(localStorage.getItem(listId)) || [];
+        const ul = document.getElementById(`${listId}list`);
+        listData.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            ul.appendChild(li);
+            li.setAttribute("draggable","true");
+            li.addEventListener('dragstart', dragStart);
+            li.addEventListener('dragend',dragEnd);
+        });
+    });
+};
