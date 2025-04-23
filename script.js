@@ -1,10 +1,10 @@
 
 let listid ="";
 function addList(listId){
-    const listbox = document.getElementById(listId)
-    const cards = document.getElementById(listId+"Cards")
-    const list = document.getElementById(listId+"list")
-    const textarea = document.getElementById(listId+"Input")
+    const taskBox = document.getElementById(listId)  //todo, doing or done
+    const cards = document.getElementById(listId+"Cards") // div in which list are placed
+    const list = document.getElementById(listId+"list")// ul in which lists are placed
+    const textarea = document.getElementById(listId+"Input")// text are where we write list names
     const cardElement = document.createElement('li')
     cardElement.setAttribute("draggable","true");
     textarea.focus();
@@ -46,9 +46,10 @@ columns.forEach((col)=>{
 function showInput(listId){
     const textinput = document.getElementById(listId+"InputContainer");
     const addText = document.querySelector(`#${listId} .add-text`);
-    textinput.style.display="block";
+
+    textinput.style.display="flex";
     addText.style.display="none";
-    listid = listId;
+
     
 }
 
