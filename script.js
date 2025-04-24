@@ -18,6 +18,7 @@ function addList(listId){
     cardElement.innerText = text;
     textarea.value=""
     list.appendChild(cardElement)
+    console.log(cardElement)
     cardElement.addEventListener('dragstart', dragStart);
     cardElement.addEventListener('dragend',dragEnd);
     console.log(listId)
@@ -30,6 +31,7 @@ function addList(listId){
 
 let draggedCard = null;
 function dragStart(){
+    console.log("Inside dragStart")
     this.classList.add("draging")
     draggedCard = this;
 }
@@ -91,28 +93,35 @@ function storeLocal(listId, text){
 }
 
 window.onload = function() {
+    const listNames=JSON.parse(localStorage.getItem("listNames"))
     const lists = ["todo", "doing", "done"]; // your list IDs
-
+    listNames.forEach(el=>{
+        addAnotherListHelper(el);
+    })
     lists.forEach(listId => {
         const listData = JSON.parse(localStorage.getItem(listId)) || [];
         const ul = document.getElementById(`${listId}list`);
         listData.forEach(item => {
             const li = document.createElement("li");
             li.textContent = item;
-            ul.appendChild(li);
             li.setAttribute("draggable","true");
             li.addEventListener('dragstart', dragStart);
             li.addEventListener('dragend',dragEnd);
+            ul.appendChild(li);
+
+
+            const newUL = document.getElementById(`${el}list`);
+            newUl.addEventListener("dragover",dragover);
         });
     });
 };
 
-function addAnotherList(listid){
+function addAnotherList(listid, list){
     
     const container = document.querySelector(".container")
     const listDiv = document.createElement("div")
     const title = document.getElementById(listid+"Input")
-    const titleTxt=title.value.toLowerCase().trim();
+    const titleTxt=title.value.toLowerCase().trim() || list
     const noSpaceTitleTxt = titleTxt.replace(/\s+/g, "");
     if(!titleTxt){
         title.value="";
@@ -177,6 +186,30 @@ function addAnotherList(listid){
     container.appendChild(listDiv)
     
     title.value = ""
-   
     hideInput(listid);
+
+
+    const newUl = document.getElementById(`${noSpaceTitleTxt}list`);
+    newUl.addEventListener("dragover", dragover);
+
+    //store list in local storage
+    listLocalStorage(noSpaceTitleTxt)
+
+}
+
+function listLocalStorage(listid){
+    const list = JSON.parse(localStorage.getItem("listNames")) || [];
+    if(!list.includes(listid)){
+        list.push(listid)
+        localStorage.setItem('listNames', JSON.stringify(list))
+    } 
+}
+
+function addAnotherListHelper(titletxt){
+    const savedInputTitle = document.createElement("input")
+    savedInputTitle.id = "manualInput";
+    savedInputTitle.value = titletxt;
+    document.body.appendChild(savedInputTitle);
+    addAnotherList("manual");
+    savedInputTitle.remove();
 }
