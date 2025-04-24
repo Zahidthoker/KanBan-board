@@ -3,7 +3,7 @@ let globalid =null;
 
 function addList(listId){
     const taskBox = document.getElementById(listId)  //todo, doing or done
-    const cards = document.getElementById(listId+"Cards") // div in which list are placed
+    const cards = document.getElementById(listId+"cards") // div in which list are placed
     const list = document.getElementById(listId+"list")// ul in which lists are placed
     const textarea = document.getElementById(listId+"Input")// text are where we write list names
     const cardElement = document.createElement('li')
@@ -20,11 +20,9 @@ function addList(listId){
     list.appendChild(cardElement)
     cardElement.addEventListener('dragstart', dragStart);
     cardElement.addEventListener('dragend',dragEnd);
-
+    console.log(listId)
     // store to localstorage
-    const listData = JSON.parse(localStorage.getItem(listId)) || [];
-    listData.push(text);
-    localStorage.setItem(listId, JSON.stringify(listData));
+   storeLocal(listId, text);
 
 
     hideInput(listId)
@@ -83,6 +81,15 @@ document.body.addEventListener("click",(event)=>{
 }
 });
 
+
+
+// store data in local storage
+function storeLocal(listId, text){
+    const listData = JSON.parse(localStorage.getItem(listId)) || [];
+    listData.push(text);
+    localStorage.setItem(listId, JSON.stringify(listData));
+}
+
 window.onload = function() {
     const lists = ["todo", "doing", "done"]; // your list IDs
 
@@ -99,3 +106,77 @@ window.onload = function() {
         });
     });
 };
+
+function addAnotherList(listid){
+    
+    const container = document.querySelector(".container")
+    const listDiv = document.createElement("div")
+    const title = document.getElementById(listid+"Input")
+    const titleTxt=title.value.toLowerCase().trim();
+    const noSpaceTitleTxt = titleTxt.replace(/\s+/g, "");
+    if(!titleTxt){
+        title.value="";
+        title.focus();
+        return ;
+    }
+    //List container
+    listDiv.className=`${noSpaceTitleTxt} list`
+    listDiv.id = `${noSpaceTitleTxt}`
+
+    //creating heading div
+    const heading = document.createElement("div")
+    heading.className = "heading"
+    const h3 =document.createElement("h3")
+    h3.innerText = title.value.trim();
+    heading.appendChild(h3);
+    listDiv.appendChild(heading)
+
+    //creating list div
+    const cards = document.createElement("div")
+    cards.className="cards";
+    cards.id = `${noSpaceTitleTxt}cards`
+
+    const ul = document.createElement("ul")
+    ul.className = "card"
+    ul.id = `${noSpaceTitleTxt}list`
+
+    cards.appendChild(ul)
+    listDiv.appendChild(cards)
+
+    // createing footer div
+    const footer = document.createElement("div")
+    footer.className = "footer"
+
+    const addtxt = document.createElement("div");
+    addtxt.className= "add-text"
+    const p = document.createElement("p")
+    p.innerHTML = "<span>+ </span> Add List"
+    p.setAttribute("onclick",`showInput("${noSpaceTitleTxt}",event)`)
+    addtxt.appendChild(p)
+    footer.appendChild(addtxt)
+
+    //creating input container
+    const inputContainer = document.createElement('div')
+    inputContainer.className= "inputContainer";
+    inputContainer.id = `${noSpaceTitleTxt}InputContainer`
+
+    const textarea = document.createElement("textarea")
+    textarea.setAttribute("name","input");
+    textarea.setAttribute("dir","auto")
+    textarea.setAttribute("placeholder","Enter a title")
+    textarea.id=`${noSpaceTitleTxt}Input`
+
+    const addlistbtn = document.createElement("button")
+    addlistbtn.setAttribute("onclick",`addList("${noSpaceTitleTxt}")`)
+    addlistbtn.innerText="Add Card"
+    inputContainer.appendChild(textarea);
+    inputContainer.appendChild(addlistbtn)
+    footer.appendChild(inputContainer)
+
+    listDiv.appendChild(footer)
+    container.appendChild(listDiv)
+    
+    title.value = ""
+   
+    hideInput(listid);
+}

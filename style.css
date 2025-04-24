@@ -7,9 +7,14 @@
 body{
     background-color: hsla(331, 53.5%, 37%, 0.9);;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 20px;
 }
 .container{
-    width: 100dvw;
     margin-top: 20px;
     display: flex;
     justify-content: center;
@@ -36,6 +41,10 @@ body{
     font-size: 1.2em;
 }
 .footer{
+    display: flex;
+    flex-direction: column;
+}
+.addList{
     display: flex;
     flex-direction: column;
 }
@@ -105,4 +114,16 @@ ul{
 .add-text span{
     font-size: 25px;
     
+}
+
+.addList{
+    display: flex;
+    padding: 10px 20px;
+    background-color: #ffffff3d;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 300px;
+    color: white;
+
 }

@@ -12,7 +12,7 @@
             <div class="heading">
                 <h3>To Do</h3>
             </div>
-            <div class="cards" id="todoCards">
+            <div class="cards" id="todocards">
                 <ul class="card" id="todolist">
                     
                 </ul>
@@ -31,7 +31,7 @@
             <div class="heading">
                 <h3>Doing</h3>
             </div>
-            <div class="cards" id="doingCards">
+            <div class="cards" id="doingcards">
                 <ul id="doinglist">
                     
                 </ul>
@@ -50,7 +50,7 @@
             <div class="heading">
                 <h3>Done</h3>
             </div>
-            <div class="cards" id="doneCards">
+            <div class="cards" id="donecards">
                 <ul class="card"  id="donelist"> 
                     
                 </ul>
@@ -66,6 +66,16 @@
         </div>
         </div>
     </div>
+    <div class="addList" id="addList">
+        <div class="add-text">
+            <p onclick="showInput('addList', event)"><span>+</span>Add Another List</p>
+        </div> 
+        <div class="inputContainer" id="addListInputContainer">
+            <textarea name="input" dir="auto" placeholder="Enter List name.." id="addListInput"></textarea>
+             <button onclick="addAnotherList('addList')">Add List</button>
+        </div>
+    </div>
+
 </body>
 <script src="script.js"></script>
 </html>
