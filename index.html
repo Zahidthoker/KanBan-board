@@ -7,75 +7,88 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <div class="todo list" id="todo">
-            <div class="heading">
-                <h3>To Do</h3>
-            </div>
-            <div class="cards" id="todocards">
-                <ul class="card" id="todolist">    
-                               
-                </ul>
-            </div>
-            <div class="footer">
-                <div class="add-text">
-                    <p onclick="showInput('todo', event)"><span>+</span>Add List</p>
-                </div>                
-                <div class="inputContainer" id="todoInputContainer" >
-                    <textarea name="input" dir="auto" placeholder="Enter a title" id="todoInput"></textarea>
-                     <button onclick="addList('todo')">Add card</button>
-                </div>
-            </div>
+    <div class="navbar">
+        <div class="leftNavbar">
+            <h1>My Trello Board</h1>
         </div>
-        <div class="doing list" id="doing">
-            <div class="heading">
-                <h3>Doing</h3>
-            </div>
-            <div class="cards" id="doingcards">
-                <ul id="doinglist">
-                    
-                </ul>
-            </div>
-            <div class="footer">
-                <div class="add-text">
-                    <p onclick="showInput('doing', event)"><span>+</span>Add List</p>
-                </div> 
-                <div class="inputContainer" id="doingInputContainer"  >
-                    <textarea name="input" dir="auto" placeholder="Enter a title" id="doingInput"></textarea>
-                     <button onclick="addList('doing')">Add card</button>
-                </div>
-            </div>
-        </div>
-        <div class="done list" id="done">
-            <div class="heading">
-                <h3>Done</h3>
-            </div>
-            <div class="cards" id="donecards">
-                <ul class="card"  id="donelist"> 
-                    
-                </ul>
-            </div>
-            <div class="footer">
-                <div class="add-text">
-                    <p onclick="showInput('done', event)"><span>+</span>Add List</p>
-                </div> 
-                <div class="inputContainer" id="doneInputContainer">
-                    <textarea name="input" dir="auto" placeholder="Enter a title" id="doneInput"></textarea>
-                     <button onclick="addList('done')">Add card</button>
-                </div>
-        </div>
-        </div>
-    </div>
-    <div class="addList" id="addList">
-        <div class="add-text">
-            <p onclick="showInput('addList', event)"><span>+</span>Add Another List</p>
-        </div> 
-        <div class="inputContainer" id="addListInputContainer">
-            <textarea name="input" dir="auto" placeholder="Enter List name.." id="addListInput"></textarea>
-             <button onclick="addAnotherList('addList')">Add List</button>
-        </div>
-    </div>
+        <div class="rightNavbar">
 
+        </div>
+    </div>
+    <div class="board">
+        <div class="container">
+            <div class="todo list" id="todo">
+                <div class="heading">
+                    <h3>To Do</h3>
+                </div>
+                <div class="cards" id="todocards">
+                    <ul class="card" id="todolist">    
+                                   
+                    </ul>
+                </div>
+                <div class="footer">
+                    <div class="add-text">
+                        <p onclick="showInput('todo', event)"><span>+</span>Add a card</p>
+                    </div>                
+                    <div class="inputContainer" id="todoInputContainer" >
+                        <textarea name="input" dir="auto" placeholder="Enter a title" id="todoInput"></textarea>
+                         <button onclick="addList('todo')">Add card</button>
+                    </div>
+                </div>
+            </div>
+            <div class="doing list" id="doing">
+                <div class="heading">
+                    <h3>Doing</h3>
+                </div>
+                <div class="cards" id="doingcards">
+                    <ul id="doinglist">
+                        
+                    </ul>
+                </div>
+                <div class="footer">
+                    <div class="add-text">
+                        <p onclick="showInput('doing', event)"><span>+</span>Add a card</p>
+                    </div> 
+                    <div class="inputContainer" id="doingInputContainer"  >
+                        <textarea name="input" dir="auto" placeholder="Enter a title" id="doingInput"></textarea>
+                         <button onclick="addList('doing')">Add card</button>
+                    </div>
+                </div>
+            </div>
+            <div class="done list" id="done">
+                <div class="heading">
+                    <h3>Done</h3>
+                </div>
+                <div class="cards" id="donecards">
+                    <ul class="card"  id="donelist"> 
+                        
+                    </ul>
+                </div>
+                <div class="footer">
+                    <div class="add-text">
+                        <p onclick="showInput('done', event)"><span>+</span>Add a card</p>
+                    </div> 
+                    <div class="inputContainer" id="doneInputContainer">
+                        <textarea name="input" dir="auto" placeholder="Enter a title" id="doneInput"></textarea>
+                         <button onclick="addList('done')">Add card</button>
+                    </div>
+            </div>
+            </div>
+        </div>
+        <div class="addList" id="addList">
+            <div class="add-text">
+                <p onclick="showInput('addList', event)"><span>+</span>Add Another List</p>
+            </div> 
+            <div class="inputContainer" id="addListInputContainer">
+                <textarea name="input" dir="auto" placeholder="Enter List name.." id="addListInput"></textarea>
+                 <button onclick="addAnotherList('addList')">Add List</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="clearboard">
+        <button onclick="clearLocalStoreage()">Clear Board</button>
+    </div>
 </body>
 <script src="script.js"></script>
 </html>

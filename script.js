@@ -30,6 +30,7 @@ function addList(listId){
 }
 
 let draggedCard = null;
+
 function dragStart(){
     console.log("Inside dragStart")
     this.classList.add("draging")
@@ -94,9 +95,9 @@ function storeLocal(listId, text){
 
 window.onload = function() {
     const listNames=JSON.parse(localStorage.getItem("listNames"))
-    const lists = ["todo", "doing", "done"]; // your list IDs
-    listNames.forEach(el=>{
-        addAnotherListHelper(el);
+    const lists = [...listNames,"todo", "doing", "done"]; // your list IDs
+    listNames.forEach((el)=>{
+        addAnotherList("manual", el)
     })
     lists.forEach(listId => {
         const listData = JSON.parse(localStorage.getItem(listId)) || [];
@@ -110,37 +111,41 @@ window.onload = function() {
             ul.appendChild(li);
 
 
-            const newUL = document.getElementById(`${el}list`);
-            newUl.addEventListener("dragover",dragover);
+            const newUL = document.getElementById(`${listId}list`);
+            newUL.addEventListener("dragover",dragover);
         });
     });
 };
 
-function addAnotherList(listid, list){
+function addAnotherList(listid, titletxt = null){
     
     const container = document.querySelector(".container")
-    const listDiv = document.createElement("div")
     const title = document.getElementById(listid+"Input")
-    const titleTxt=title.value.toLowerCase().trim() || list
-    const noSpaceTitleTxt = titleTxt.replace(/\s+/g, "");
-    if(!titleTxt){
-        title.value="";
-        title.focus();
-        return ;
+    let rawTitleTxt=titletxt || title.value.toLowerCase().trim() 
+    const noSpaceTitleTxt = rawTitleTxt.replace(/\s+/g, "");
+    if(!rawTitleTxt){
+        if(title){
+            title.value=""
+            title.focus();
+        }
+        return;
     }
+
+    const listDiv = document.createElement("div")
     //List container
     listDiv.className=`${noSpaceTitleTxt} list`
-    listDiv.id = `${noSpaceTitleTxt}`
+    listDiv.id = noSpaceTitleTxt;
 
     //creating heading div
     const heading = document.createElement("div")
     heading.className = "heading"
     const h3 =document.createElement("h3")
-    h3.innerText = title.value.trim();
+    h3.innerText = titletxt || title.value.trim();
     heading.appendChild(h3);
     listDiv.appendChild(heading)
 
-    //creating list div
+
+    //ccrd section
     const cards = document.createElement("div")
     cards.className="cards";
     cards.id = `${noSpaceTitleTxt}cards`
@@ -159,7 +164,7 @@ function addAnotherList(listid, list){
     const addtxt = document.createElement("div");
     addtxt.className= "add-text"
     const p = document.createElement("p")
-    p.innerHTML = "<span>+ </span> Add List"
+    p.innerHTML = "<span>+ </span> Add a card"
     p.setAttribute("onclick",`showInput("${noSpaceTitleTxt}",event)`)
     addtxt.appendChild(p)
     footer.appendChild(addtxt)
@@ -185,8 +190,8 @@ function addAnotherList(listid, list){
     listDiv.appendChild(footer)
     container.appendChild(listDiv)
     
-    title.value = ""
-    hideInput(listid);
+    if(title) title.value = ""
+    if(listid!=="manual") hideInput(listid);
 
 
     const newUl = document.getElementById(`${noSpaceTitleTxt}list`);
@@ -205,11 +210,7 @@ function listLocalStorage(listid){
     } 
 }
 
-function addAnotherListHelper(titletxt){
-    const savedInputTitle = document.createElement("input")
-    savedInputTitle.id = "manualInput";
-    savedInputTitle.value = titletxt;
-    document.body.appendChild(savedInputTitle);
-    addAnotherList("manual");
-    savedInputTitle.remove();
+function clearLocalStoreage(){
+    localStorage.clear();
+    window.location.reload();
 }
