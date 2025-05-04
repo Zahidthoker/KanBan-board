@@ -95,8 +95,11 @@ function storeLocal(listId, text){
 window.onload = function() {
     const listNames=JSON.parse(localStorage.getItem("listNames"))
     if(listNames==null){
-        return;
+        const addboard = document.getElementById('addBoard')
+        addboard.innerHTML = '<span>+</span> add a list'
+        
     }
+    
     const lists = [...listNames,"todo", "doing", "done"]; // your list IDs
     listNames.forEach((el)=>{
         addAnotherList("manual", el)
@@ -202,6 +205,13 @@ function addAnotherList(listid, titletxt = null){
     //store list in local storage
     listLocalStorage(noSpaceTitleTxt)
 
+    textarea.addEventListener('keydown',(e)=>{
+        if(e.key==='Enter'){
+            addList(noSpaceTitleTxt)
+            showInput(noSpaceTitleTxt, event)
+        }
+    })
+
 }
 
 function listLocalStorage(listid){
@@ -217,6 +227,8 @@ function clearLocalStoreage(){
     window.location.reload();
 }
 
+
+//Making the Board Name editable
 const leftNavbar = document.getElementById('leftNavbar')
 const heading = document.getElementById('boardName')
 heading.addEventListener('click',()=>{
