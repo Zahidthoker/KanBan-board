@@ -18,7 +18,6 @@ function addList(listId){
     cardElement.innerText = text;
     textarea.value=""
     list.appendChild(cardElement)
-    console.log(cardElement)
     cardElement.addEventListener('dragstart', dragStart);
     cardElement.addEventListener('dragend',dragEnd);
     console.log(listId)
@@ -95,6 +94,9 @@ function storeLocal(listId, text){
 
 window.onload = function() {
     const listNames=JSON.parse(localStorage.getItem("listNames"))
+    if(listNames==null){
+        return;
+    }
     const lists = [...listNames,"todo", "doing", "done"]; // your list IDs
     listNames.forEach((el)=>{
         addAnotherList("manual", el)
@@ -214,3 +216,38 @@ function clearLocalStoreage(){
     localStorage.clear();
     window.location.reload();
 }
+
+const leftNavbar = document.getElementById('leftNavbar')
+const heading = document.getElementById('boardName')
+heading.addEventListener('click',()=>{
+    const input = document.createElement('input')
+    input.value = heading.innerText;
+    input.style.position = 'absolute';
+    input.style.top = heading.offsetTop + "px"
+    input.style.left = heading.offsetLeft + "px"
+    input.style.width = heading.offsetWidth + "px";
+    input.style.height = heading.offsetHeight + "px";
+    input.style.fontSize = "1.5em";  // match your h2 font
+    input.style.border = "none";
+    input.style.padding = "0";
+    input.style.margin = "0";
+    input.style.boxSizing = "border-box";
+    heading.style.visibility = 'hidden'
+    leftNavbar.appendChild(input)
+    input.focus();
+    input.select();
+    heading.style.visibility = 'hidden'
+
+
+    input.addEventListener('blur',()=>{
+        heading.innerText = input.value;
+        heading.style.visibility = 'visible'
+        input.remove();
+    })
+
+    input.addEventListener('keydown',(e)=>{
+        if(e.key === "Enter"){
+            input.blur();
+        }
+    })
+})

@@ -25,7 +25,11 @@ body{
     align-items: center;
     padding: 10px 25px;
     background-color: hsla(331, 53.5%, 32%);
-    color:rgb(222, 220, 220,0.9)
+    color:rgb(222, 220, 220,0.9);
+}
+
+.leftNavbar{
+    position: relative;
 }
 
 
